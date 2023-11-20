@@ -2,12 +2,12 @@ import { Field, Int, ObjectType } from '@nestjs/graphql';
 
 @ObjectType()
 export class userInfo {
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   accessId: string | null;
 
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   nickname: string | null;
 
-  @Field(() => Int)
+  @Field(() => Int, { nullable: true })
   level: number | null;
 }

@@ -3,11 +3,18 @@
 # ------------------------------------------------------
 
 type userInfo {
-  accessId: String!
-  nickname: String!
-  level: Int!
+  accessId: String
+  nickname: String
+  level: Int
+}
+
+type userMaxDivision {
+  matchType: Int
+  division: Int
+  achievementDate: String
 }
 
 type Query {
   getUserInfo(nickname: String!): userInfo!
+  getUserMaxDivision(nickname: String!): userMaxDivision!
 }

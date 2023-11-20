@@ -9,6 +9,5 @@ type userInfo {
 }
 
 type Query {
-  sayHello: String!
   getUserInfo(nickname: String!): userInfo!
 }

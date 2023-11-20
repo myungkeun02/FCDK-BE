@@ -3,11 +3,11 @@ import { Field, Int, ObjectType } from '@nestjs/graphql';
 @ObjectType()
 export class userInfo {
   @Field(() => String)
-  accessId: string;
+  accessId: string | null;
 
   @Field(() => String)
-  nickname: string;
+  nickname: string | null;
 
   @Field(() => Int)
-  level: number;
+  level: number | null;
 }

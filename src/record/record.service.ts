@@ -24,13 +24,23 @@ export class RecordService {
     return userInfo;
   }
 
-  async getUserMaxDivision(accessId: string): Promise<userMaxDivision> {
+  async getUserMaxDivision(accessId: string): Promise<userMaxDivision[]> {
     const url = `https://public.api.nexon.com/openapi/fconline/v1.0/users/${accessId}/maxdivision`;
     const userMaxDivision = await this.callUserApi(url);
     console.log(userMaxDivision);
     console.log(userMaxDivision.length);
-    for (let i = 0; userMaxDivision.length > i; i++) {
-      return userMaxDivision[i];
-    }
+    return userMaxDivision;
   }
+
+  async getUserMatchRecord(
+    nickname: string,
+    // getUserMatchRecordInput: IGetUserMatchRecordInput,
+  ): Promise<any> {}
+}
+
+export interface IGetUserMatchRecordInput {
+  accessid: string;
+  matchType: number;
+  offset: number;
+  limit: number;
 }

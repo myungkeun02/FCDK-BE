@@ -16,5 +16,5 @@ type userMaxDivision {
 
 type Query {
   getUserInfo(nickname: String!): userInfo!
-  getUserMaxDivision(nickname: String!): userMaxDivision!
+  getUserMaxDivision(nickname: String!): [userMaxDivision!]!
 }

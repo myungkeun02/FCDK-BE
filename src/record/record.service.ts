@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import axios from 'axios';
-import { userInfo } from './dto/userInfo.dto';
-import { userMaxDivision } from './dto/userMaxDivision.dto';
+import { UserInfo } from './dto/userInfo.dto';
+import { UserMaxDivision } from './dto/userMaxDivision.dto';
+import { IGetUserMatchRecordInput } from './interfaces/record-service.interface';
 
-@Injectable({})
+@Injectable()
 export class RecordService {
   private async callUserApi(url: string): Promise<any> {
     try {
@@ -17,30 +18,34 @@ export class RecordService {
     }
   }
 
-  async getUserInfo(nickname: string): Promise<userInfo> {
+  async getUserInfo(nickname: string): Promise<UserInfo> {
     const url = `https://public.api.nexon.com/openapi/fconline/v1.0/users?nickname=${nickname}`;
-    const userInfo = await this.callUserApi(url);
-    console.log(userInfo);
-    return userInfo;
+    const result = this.callUserApi(url);
+    console.log(result);
+    return result;
   }
 
-  async getUserMaxDivision(accessId: string): Promise<userMaxDivision[]> {
+  async getUserMaxDivision(accessId: string): Promise<UserMaxDivision[]> {
     const url = `https://public.api.nexon.com/openapi/fconline/v1.0/users/${accessId}/maxdivision`;
-    const userMaxDivision = await this.callUserApi(url);
-    console.log(userMaxDivision);
-    console.log(userMaxDivision.length);
-    return userMaxDivision;
+    const result = this.callUserApi(url);
+    console.log(result);
+    return result;
   }
 
-  async getUserMatchRecord(
-    nickname: string,
-    // getUserMatchRecordInput: IGetUserMatchRecordInput,
-  ): Promise<any> {}
-}
-
-export interface IGetUserMatchRecordInput {
-  accessid: string;
-  matchType: number;
-  offset: number;
-  limit: number;
+  async getUserMatchRecord({
+    getUserMatchRecordInput,
+  }: IGetUserMatchRecordInput): Promise<string[]> {
+    try {
+      const { nickname, matchType, offset, limit } = getUserMatchRecordInput;
+      const userInfo = await this.getUserInfo(nickname);
+      const accessId = userInfo.accessId;
+      const url = `https://public.api.nexon.com/openapi/fconline/v1.0/users/${accessId}/matches?matchtype=${matchType}&offset=${offset}&limit=${limit}`;
+      const userMatchRecord = await this.callUserApi(url);
+      console.log(userMatchRecord);
+      console.log(userMatchRecord.length);
+      return userMatchRecord;
+    } catch (error) {
+      throw new Error(`Failed to get user match record: ${error.message}`);
+    }
+  }
 }

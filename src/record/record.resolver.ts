@@ -1,52 +1,45 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
-import { IGetUserMatchRecordInput, RecordService } from './record.service';
-import { userInfo } from './dto/userInfo.dto';
-import { userMaxDivision } from './dto/userMaxDivision.dto';
+import { UserInfo } from './dto/userInfo.dto';
+import { UserMaxDivision } from './dto/userMaxDivision.dto';
+import { RecordService } from './record.service';
+import { GetUserMatchRecordInput } from './dto/getUserMatchRecordInput.dto';
 
-@Resolver({})
+@Resolver()
 export class RecordResolver {
   constructor(private readonly recordService: RecordService) {}
 
-  @Query(() => userInfo)
-  async getUserInfo(
-    @Args('nickname', { type: () => String }) nickname: string,
-  ): Promise<userInfo> {
+  @Query(() => UserInfo)
+  async getUserInfo(@Args('nickname') nickname: string): Promise<UserInfo> {
     try {
       return await this.recordService.getUserInfo(nickname);
     } catch (error) {
-      // 구체적인 에러처리 추가 가능
       throw new Error(`Failed to get user info: ${error.message}`);
     }
   }
 
-  @Query(() => [userMaxDivision])
+  @Query(() => [UserMaxDivision])
   async getUserMaxDivision(
-    @Args('nickname', { type: () => String }) nickname: string,
-  ): Promise<userMaxDivision[]> {
+    @Args('nickname') nickname: string,
+  ): Promise<UserMaxDivision[]> {
     try {
       const userInfo = await this.recordService.getUserInfo(nickname);
       return await this.recordService.getUserMaxDivision(userInfo.accessId);
     } catch (error) {
-      // 구체적인 에러처리 추가 가능
       throw new Error(`Failed to get user max division: ${error.message}`);
     }
   }
 
+  @Query(() => [String])
   async getUserMatchRecord(
-    @Args(
-      'nickname',
-      { type: () => String },
-      //'getUserMatchRecordInput'
-    )
-    nickname: string,
-    // getUserMatchRecordInput: IGetUserMatchRecordInput,
-  ): Promise<any> {
+    @Args('getUserMatchRecordInput')
+    getUserMatchRecordInput: GetUserMatchRecordInput,
+  ): Promise<string[]> {
     try {
-      // 1. getUserInfo를 이용해서 accecsId를 가져온뒤에...
-      const userInfo = await this.recordService.getUserInfo(nickname);
-      return await this.recordService.getUserMatchRecord({userInfo.accessId, });
+      return await this.recordService.getUserMatchRecord({
+        getUserMatchRecordInput,
+      });
     } catch (error) {
-      throw new Error(`Failed to get user max division: ${error.message}`);
+      throw new Error(`Failed to get user match record: ${error.message}`);
     }
   }
 }

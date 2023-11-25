@@ -1,7 +1,7 @@
 import { Field, InputType, Int } from '@nestjs/graphql';
 
 @InputType()
-export class GetUserMatchRecordInput {
+export class GetUserMatchRecordInputDTO {
   @Field(() => String, { nullable: true })
   nickname: string | null;
 

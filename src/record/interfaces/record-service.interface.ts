@@ -1,5 +1,5 @@
-import { GetUserMatchRecordInput } from '../dto/getUserMatchRecordInput.dto';
+import { GetUserMatchRecordInputDTO } from '../dto/getUserMatchRecordInput.dto';
 
-export interface IGetUserMatchRecordInput {
-  getUserMatchRecordInput: GetUserMatchRecordInput;
+export interface IGetUserMatchRecordInputDTO {
+  getUserMatchRecordInputDTO: GetUserMatchRecordInputDTO;
 }

@@ -2,25 +2,25 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type UserInfo {
+type UserInfoDTO {
   accessId: String
   nickname: String
   level: Int
 }
 
-type UserMaxDivision {
+type UserMaxDivisionDTO {
   matchType: Int
   division: Int
   achievementDate: String
 }
 
 type Query {
-  getUserInfo(nickname: String!): UserInfo!
-  getUserMaxDivision(nickname: String!): [UserMaxDivision!]!
-  getUserMatchRecord(getUserMatchRecordInput: GetUserMatchRecordInput!): [String!]!
+  getUserInfo(nickname: String!): UserInfoDTO!
+  getUserMaxDivision(nickname: String!): [UserMaxDivisionDTO!]!
+  getUserMatchRecord(getUserMatchRecordInput: GetUserMatchRecordInputDTO!): [String!]!
 }
 
-input GetUserMatchRecordInput {
+input GetUserMatchRecordInputDTO {
   nickname: String
   matchType: Int
   offset: Int = 0

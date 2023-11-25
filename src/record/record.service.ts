@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import axios from 'axios';
-import { UserInfo } from './dto/userInfo.dto';
-import { UserMaxDivision } from './dto/userMaxDivision.dto';
-import { IGetUserMatchRecordInput } from './interfaces/record-service.interface';
+import { UserInfoDTO } from './dto/userInfo.dto';
+import { UserMaxDivisionDTO } from './dto/userMaxDivision.dto';
+import { IGetUserMatchRecordInputDTO } from './interfaces/record-service.interface';
 
 @Injectable()
 export class RecordService {
@@ -18,14 +18,14 @@ export class RecordService {
     }
   }
 
-  async getUserInfo(nickname: string): Promise<UserInfo> {
+  async getUserInfo(nickname: string): Promise<UserInfoDTO> {
     const url = `https://public.api.nexon.com/openapi/fconline/v1.0/users?nickname=${nickname}`;
     const result = this.callUserApi(url);
     console.log(result);
     return result;
   }
 
-  async getUserMaxDivision(accessId: string): Promise<UserMaxDivision[]> {
+  async getUserMaxDivision(accessId: string): Promise<UserMaxDivisionDTO[]> {
     const url = `https://public.api.nexon.com/openapi/fconline/v1.0/users/${accessId}/maxdivision`;
     const result = this.callUserApi(url);
     console.log(result);
@@ -33,10 +33,10 @@ export class RecordService {
   }
 
   async getUserMatchRecord({
-    getUserMatchRecordInput,
-  }: IGetUserMatchRecordInput): Promise<string[]> {
+    getUserMatchRecordInputDTO,
+  }: IGetUserMatchRecordInputDTO): Promise<string[]> {
     try {
-      const { nickname, matchType, offset, limit } = getUserMatchRecordInput;
+      const { nickname, matchType, offset, limit } = getUserMatchRecordInputDTO;
       const userInfo = await this.getUserInfo(nickname);
       const accessId = userInfo.accessId;
       const url = `https://public.api.nexon.com/openapi/fconline/v1.0/users/${accessId}/matches?matchtype=${matchType}&offset=${offset}&limit=${limit}`;

@@ -1,15 +1,15 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
-import { UserInfo } from './dto/userInfo.dto';
-import { UserMaxDivision } from './dto/userMaxDivision.dto';
+import { UserInfoDTO } from './dto/userInfo.dto';
+import { UserMaxDivisionDTO } from './dto/userMaxDivision.dto';
 import { RecordService } from './record.service';
-import { GetUserMatchRecordInput } from './dto/getUserMatchRecordInput.dto';
+import { GetUserMatchRecordInputDTO } from './dto/getUserMatchRecordInput.dto';
 
 @Resolver()
 export class RecordResolver {
   constructor(private readonly recordService: RecordService) {}
 
-  @Query(() => UserInfo)
-  async getUserInfo(@Args('nickname') nickname: string): Promise<UserInfo> {
+  @Query(() => UserInfoDTO)
+  async getUserInfo(@Args('nickname') nickname: string): Promise<UserInfoDTO> {
     try {
       return await this.recordService.getUserInfo(nickname);
     } catch (error) {
@@ -17,10 +17,10 @@ export class RecordResolver {
     }
   }
 
-  @Query(() => [UserMaxDivision])
+  @Query(() => [UserMaxDivisionDTO])
   async getUserMaxDivision(
     @Args('nickname') nickname: string,
-  ): Promise<UserMaxDivision[]> {
+  ): Promise<UserMaxDivisionDTO[]> {
     try {
       const userInfo = await this.recordService.getUserInfo(nickname);
       return await this.recordService.getUserMaxDivision(userInfo.accessId);
@@ -32,11 +32,11 @@ export class RecordResolver {
   @Query(() => [String])
   async getUserMatchRecord(
     @Args('getUserMatchRecordInput')
-    getUserMatchRecordInput: GetUserMatchRecordInput,
+    getUserMatchRecordInputDTO: GetUserMatchRecordInputDTO,
   ): Promise<string[]> {
     try {
       return await this.recordService.getUserMatchRecord({
-        getUserMatchRecordInput,
+        getUserMatchRecordInputDTO,
       });
     } catch (error) {
       throw new Error(`Failed to get user match record: ${error.message}`);

@@ -1,7 +1,7 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
 
 @ObjectType()
-export class UserMaxDivision {
+export class UserMaxDivisionDTO {
   @Field(() => Int, { nullable: true })
   matchType: number | null;
 

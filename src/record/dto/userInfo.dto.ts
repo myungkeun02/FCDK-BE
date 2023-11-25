@@ -1,7 +1,7 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
 
 @ObjectType()
-export class UserInfo {
+export class UserInfoDTO {
   @Field(() => String, { nullable: true })
   accessId: string | null;
 

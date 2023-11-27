@@ -3,6 +3,7 @@ import axios from 'axios';
 import { UserInfoDTO } from './dto/userInfo.dto';
 import { UserMaxDivisionDTO } from './dto/userMaxDivision.dto';
 import { IGetUserMatchRecordInputDTO } from './interfaces/record-service.interface';
+import { MatchDTO } from './dto/match.dto';
 
 @Injectable()
 export class RecordService {
@@ -47,5 +48,11 @@ export class RecordService {
     } catch (error) {
       throw new Error(`Failed to get user match record: ${error.message}`);
     }
+  }
+  async getMAtchDetailRecord(matchId: string): Promise<MatchDTO> {
+    const url = `https://public.api.nexon.com/openapi/fconline/v1.0/matches/${matchId}`;
+    const result = this.callUserApi(url);
+    console.log(result);
+    return result;
   }
 }

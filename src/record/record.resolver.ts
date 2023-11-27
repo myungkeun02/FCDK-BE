@@ -3,6 +3,7 @@ import { UserInfoDTO } from './dto/userInfo.dto';
 import { UserMaxDivisionDTO } from './dto/userMaxDivision.dto';
 import { RecordService } from './record.service';
 import { GetUserMatchRecordInputDTO } from './dto/getUserMatchRecordInput.dto';
+import { MatchDTO } from './dto/match.dto';
 
 @Resolver()
 export class RecordResolver {
@@ -42,4 +43,16 @@ export class RecordResolver {
       throw new Error(`Failed to get user match record: ${error.message}`);
     }
   }
+
+  @Query(() => MatchDTO)
+  async getMatchDetailRecord(
+    @Args('matchId') matchId: string,
+  ): Promise<MatchDTO> {
+    try {
+      return await this.recordService.getMAtchDetailRecord(matchId);
+    } catch (error) {
+      throw new Error(`Failed to get user match record: ${error.message}`);
+    }
+  }
 }
+

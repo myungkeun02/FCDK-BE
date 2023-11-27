@@ -14,10 +14,139 @@ type UserMaxDivisionDTO {
   achievementDate: String
 }
 
+type MatchDetailDTO {
+  seasonId: Int!
+  matchResult: String!
+  matchEndType: Int!
+  systemPause: Int!
+  foul: Int!
+  injury: Int!
+  redCards: Int!
+  yellowCards: Int!
+  dribble: Int!
+  cornerKick: Int!
+  possession: Int!
+  offsideCount: Int!
+  averageRating: Float!
+  controller: String!
+}
+
+type ShootDTO {
+  shootTotal: Int!
+  effectiveShootTotal: Int!
+  shootOutScore: Int!
+  goalTotal: Int!
+  goalTotalDisplay: Int!
+  ownGoal: Int!
+  shootHeading: Int!
+  goalHeading: Int!
+  shootFreekick: Int!
+  goalFreekick: Int!
+  shootInPenalty: Int!
+  goalInPenalty: Int!
+  shootOutPenalty: Int!
+  goalOutPenalty: Int!
+  shootPenaltyKick: Int!
+  goalPenaltyKick: Int!
+}
+
+type ShootDetailDTO {
+  goalTime: Int!
+  x: Float!
+  y: Float!
+  type: Int!
+  result: Int!
+  spId: Int!
+  spGrade: Int!
+  spLevel: Int!
+  spIdType: Boolean!
+  assist: Boolean!
+  assistSpId: Int!
+  assistX: Float!
+  assistY: Float!
+  hitPost: Boolean!
+  inPenalty: Boolean!
+}
+
+type PassDTO {
+  passTry: Int!
+  passSuccess: Int!
+  shortPassTry: Int!
+  shortPassSuccess: Int!
+  longPassTry: Int!
+  longPassSuccess: Int!
+  bouncingLobPassTry: Int!
+  bouncingLobPassSuccess: Int!
+  drivenGroundPassTry: Int!
+  drivenGroundPassSuccess: Int!
+  throughPassTry: Int!
+  throughPassSuccess: Int!
+  lobbedThroughPassTry: Int!
+  lobbedThroughPassSuccess: Int!
+}
+
+type DefenceDTO {
+  blockTry: Int!
+  blockSuccess: Int!
+  tackleTry: Int!
+  tackleSuccess: Int!
+}
+
+type StatusDTO {
+  shoot: Int!
+  effectiveShoot: Int!
+  assist: Int!
+  goal: Int!
+  dribble: Int!
+  intercept: Int!
+  defending: Int!
+  passTry: Int!
+  passSuccess: Int!
+  dribbleTry: Int!
+  dribbleSuccess: Int!
+  ballPossesionTry: Int!
+  ballPossesionSuccess: Int!
+  aerialTry: Int!
+  aerialSuccess: Int!
+  blockTry: Int!
+  block: Int!
+  tackleTry: Int!
+  tackle: Int!
+  yellowCards: Int!
+  redCards: Int!
+  spRating: Float!
+}
+
+type PlayerDTO {
+  spId: Int!
+  spPosition: Int!
+  spGrade: Int!
+  status: StatusDTO!
+}
+
+type MatchInfoDTO {
+  accessId: String!
+  nickname: String!
+  matchDetail: MatchDetailDTO!
+  shoot: ShootDTO!
+  shootDetail: [ShootDetailDTO!]!
+  pass: PassDTO!
+  defence: DefenceDTO!
+  player: [PlayerDTO!]!
+}
+
+type MatchDTO {
+  matchId: String!
+  matchDate: String!
+  matchType: Int!
+  matchInfo: [MatchInfoDTO!]!
+}
+
 type Query {
   getUserInfo(nickname: String!): UserInfoDTO!
   getUserMaxDivision(nickname: String!): [UserMaxDivisionDTO!]!
   getUserMatchRecord(getUserMatchRecordInput: GetUserMatchRecordInputDTO!): [String!]!
+  getMatchDetailRecord(matchId: String!): MatchDTO!
 }
 
 input GetUserMatchRecordInputDTO {

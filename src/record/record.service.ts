@@ -7,7 +7,7 @@ import { MatchDTO } from './dto/match.dto';
 
 @Injectable()
 export class RecordService {
-  private async callUserApi(url: string): Promise<any> {
+  async callUserApi(url: string): Promise<any> {
     try {
       const apiKey = process.env.EA_SPORTS_FC_ONLINE_API_KEY;
       const result = await axios.get(url, {

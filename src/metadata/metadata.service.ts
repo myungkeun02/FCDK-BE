@@ -21,4 +21,11 @@ export class MetadataService {
     console.log(result);
     return result;
   }
+
+  async PLAY(): Promise<any> {
+    const url = `https://static.api.nexon.co.kr/fconline/latest/matchtype.json`;
+    const result = this.callUserApi(url);
+    console.log(result);
+    return result;
+  }
 }
